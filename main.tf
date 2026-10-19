@@ -26,7 +26,7 @@ resource "aws_instance" "website1" {
   instance_type          = "t2.micro"
   subnet_id              = data.aws_subnets.default.ids[0]
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  key_name               = "a2"
+  key_name               = "sk26"
   user_data              = <<-EOF
 #!/bin/bash
 apt-get update -y
