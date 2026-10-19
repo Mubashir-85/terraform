@@ -1,0 +1,32 @@
+name: Terraform EC2
+on:
+  pull_request:
+   branches: [main]
+  push:
+   branches: [main]
+concurrency:
+  group: terraform-myapp2
+  cancel-in-progress: false
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+jobs:
+  terraform:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: 1.16.6
+    - name: Terraform Init
+      run: terraform init
+    - name: Terraform Validate
+      run: terraform validate
+    - name: Terraform Plan
+      run: terraform plan
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
