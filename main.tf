@@ -21,7 +21,7 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_instance" "web1" {
+resource "aws_instance" "website1" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.micro"
   subnet_id              = data.aws_subnets.default.ids[0]
